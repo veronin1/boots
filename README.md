@@ -13,13 +13,17 @@ Compresses data by assigning shorter bit codes to more frequent characters.
 
 ## Usage
 ```bash
-./boots -c -rle input_file output.rle       # Compress a file using Run-Length Encoding (RLE)
+# Compress a file using Run-Length Encoding (RLE)
+./boots -c -rle input_file output.rle
 
-./boots -c -huff input_file output.huff     # Compress a file using Huffman Coding
+# Compress a file using Huffman Coding
+./boots -c -huff input_file output.huff
 
-./boots -d input.rle output_file            # Decompress an RLE-compressed file
+# Decompress an RLE-compressed file
+./boots -d input.rle output_file
 
-./boots -d input.huff output_file           # Decompress a Huffman-compressed file
+# Decompress a Huffman-compressed file
+./boots -d input.huff output_file
 ```
 
 ## TODO (Future Idea)
