@@ -16,5 +16,5 @@ Compresses data by assigning shorter bit codes to more frequent characters.
 ```bash
 ./compress -rle input.txt output.rle        # Compress using Run-Length Encoding
 ./compress -h input.txt output.huff         # Compress using Huffman Coding
-./decompress input.(rle/huff) output.txt # Decompress compressed file
+./decompress input.(rle/huff) output.txt    # Decompress compressed file
 ```
