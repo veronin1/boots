@@ -1,4 +1,4 @@
-#### CS50X Final Project - File Compressor & Decompressor
+# CS50X Final Project - File Compressor & Decompressor
 
 ## Run-Length Encoding (RLE)
 Encodes consecutive repeated characters as a single character and count. (for example JJJJJ -> 5J)
