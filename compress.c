@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
             length = 1;
         }
         
-        if (length >= 4)
+        if (length >= 3)
         {
             rle[i] = length;
             rle[i + 1] = test[i];
