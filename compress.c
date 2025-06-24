@@ -10,6 +10,28 @@ int main(int argc, char* argv[])
     {
         return 1;
     }
+
+    char *test_literal = "AAAABBBAABBBBBCCCCCCCDABCDBAAABBBBCCCD";
+    char test[100];
+    strcpy(test, test_literal);
+
+    int length = 1;
+    for (int i = 0, n = strlen(test); i < n; i++)
+    {
+        if (test[i] == test[i + 1])
+        {
+            length++;
+        }
+        else 
+        {
+            length = 1;
+        }
+        
+        if (length >= 4)
+        {
+            printf("length %d '%c' at index %d\n", length, test[i], i - length + 1);
+        }
+    }
     return 0;
 }
 
@@ -42,3 +64,5 @@ bool argument_check(int argc, char* argv[])
 
     return true;
 }
+
+// char* rle_compress(const char* )
