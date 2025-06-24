@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
 
 bool argument_check(int argc, char* argv[]);
 
@@ -14,6 +15,7 @@ int main(int argc, char* argv[])
     char *test_literal = "AAAABBBAABBBBBCCCCCCCDABCDBAAABBBBCCCD";
     char test[100];
     strcpy(test, test_literal);
+    char rle[200];
 
     int length = 1;
     for (int i = 0, n = strlen(test); i < n; i++)
@@ -29,7 +31,20 @@ int main(int argc, char* argv[])
         
         if (length >= 4)
         {
-            printf("length %d '%c' at index %d\n", length, test[i], i - length + 1);
+            rle[i] = length;
+            rle[i + 1] = test[i];
+        }
+    }
+
+    for (int i = 0, n = strlen(rle); i < n; i++)
+    {
+        if (isdigit(rle[i]))
+        {
+            printf("%i", rle[i]);
+        }
+        else
+        {
+            printf("%c", rle[i]);
         }
     }
     return 0;
