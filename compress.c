@@ -15,27 +15,32 @@ int main(int argc, char *argv[]) {
   strcpy(test, test_literal);
   char rle[200];
 
-  int length = 1;
-  for (int i = 0, n = strlen(test); i < n; i++) {
-    if (test[i] == test[i + 1]) {
-      length++;
-    } else {
-      length = 1;
+  int i = 0;
+  int rle_index = 0;
+  while (test[i] != '\0') {
+    char current_char = test[i];
+    int run_length = 1;
+
+    // Count how many times current char repeats
+    while (test[i] == test[i + 1]) {
+      run_length++;
+      i++;
     }
 
-    if (length >= 3) {
-      rle[i] = length;
-      rle[i + 1] = test[i];
+    if (run_length >= 3) {
+      sprintf(rle + rle_index, "%i%c", run_length, current_char);
+      rle_index += strlen(rle + rle_index);
     }
+
+    i++;
   }
+
+  rle[i] = '\0';
 
   for (int i = 0, n = strlen(rle); i < n; i++) {
-    if (isdigit(rle[i])) {
-      printf("%i", rle[i]);
-    } else {
-      printf("%c", rle[i]);
-    }
+    printf("%c", rle[i]);
   }
+
   return 0;
 }
 
@@ -65,4 +70,4 @@ bool argument_check(int argc, char *argv[]) {
   return true;
 }
 
-// char* rle_compress(const char* )
+// void rle_compress(FILE *fp, int input_length, char *output);
