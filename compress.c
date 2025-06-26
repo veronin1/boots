@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  FILE *file = fopen(argv[3], "r");
+  FILE *file = fopen(argv[3], "rb");
 
   int length = get_file_length(file);
 
@@ -64,22 +64,28 @@ int get_file_length(FILE *file) {
   return (int)length;
 }
 
-void rle_compress(FILE *file, int input_length, char *output) {
+void rle_compress(FILE *file, int input_length, char *output_filename) {
   if (file == NULL) {
     return;
   }
 
-  char *buffer = malloc(input_length + 1);
+  unsigned char *buffer = malloc(input_length + 1);
   if (!buffer) {
     fprintf(stderr, "Memory allocation failed\n");
     return;
   }
 
   size_t bytes_read = fread(buffer, sizeof(char), input_length, file);
-  buffer[bytes_read] = '\0';
+
+  char *rle = malloc(2 * input_length + 1);
+  if (!rle) {
+    fprintf(stderr, "Memory allocation failed\n");
+    free(buffer);
+    return;
+  }
 
   int i = 0;
-  int output_index = 0;
+  int rle_index = 0;
   while (i < (int)bytes_read) {
     char current_char = buffer[i];
     int run_length = 1;
@@ -91,26 +97,27 @@ void rle_compress(FILE *file, int input_length, char *output) {
     }
 
     if (run_length >= 3) {
-      sprintf(output + output_index, "%i%c", run_length, current_char);
-      output_index += strlen(output + output_index);
+      sprintf(rle + rle_index, "%i%c", run_length, current_char);
+      rle_index += strlen(rle + rle_index);
     } else {
       for (int j = 0; j < run_length; j++) {
-        output[output_index++] = current_char;
+        rle[rle_index++] = current_char;
       }
     }
 
     i++;
   }
 
-  output[i] = '\0';
+  rle[rle_index] = '\0';
 
-  // Write to output file
-  FILE *output_file = fopen(output, "w");
-  if (output_file != NULL) {
-    fwrite(output, sizeof(char), 1, output_file);
+  // Write to rle file
+  FILE *rle_file = fopen(output_filename, "wb");
+  if (rle_file != NULL) {
+    fwrite(rle, sizeof(char), strlen(rle), rle_file);
   }
 
-  fclose(output_file);
+  fclose(rle_file);
   free(buffer);
+  free(rle);
   return;
 }
