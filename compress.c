@@ -86,6 +86,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
 
   int i = 0;
   int rle_index = 0;
+  char delimiter = 'Q';
   while (i < (int)bytes_read) {
     char current_char = buffer[i];
     int run_length = 1;
@@ -96,11 +97,17 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
       i++;
     }
 
+    // if length > 3 print to array the count and number (i.e. 11A)
     if (run_length >= 3) {
       sprintf(rle + rle_index, "%i%c", run_length, current_char);
       rle_index += strlen(rle + rle_index);
     } else {
       for (int j = 0; j < run_length; j++) {
+        if (current_char == delimiter) {
+          rle[rle_index++] = delimiter;
+          rle[rle_index++] = ' ';
+        } else {
+        }
         rle[rle_index++] = current_char;
       }
     }
