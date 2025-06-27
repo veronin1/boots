@@ -1,17 +1,21 @@
-# CS50X Final Project - File Compressor & Decompressor
+# Boots - File Compressor & Decompressor
 
 ## Run-Length Encoding (RLE)
+
 Encodes consecutive repeated characters as a single character and count. (for example AAAAA -> 5A)
 
 ## Huffman Coding
+
 Compresses data by assigning shorter bit codes to more frequent characters.
 
 ## Features
+
 - Compress and decompress files using RLE or Huffman
 - CLI-based usage with custom file output
 - Built entirely in C
 
 ## Usage
+
 ```bash
 # Compress a file using Run-Length Encoding (RLE)
 ./boots -c -rle input_file output.rle
