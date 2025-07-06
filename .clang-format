@@ -1,0 +1,14 @@
+# Use Google style as the base
+BasedOnStyle: Google
+Language: Cpp
+
+# Explicit overrides
+TabWidth: 2
+UseTab: Never
+ColumnLimit: 80
+DerivePointerAlignment: false
+PointerAlignment: Right
+AllowShortFunctionsOnASingleLine: InlineOnly
+BreakBeforeBraces: Attach
+SpacesBeforeTrailingComments: 1
+SpaceAfterCStyleCast: true
