@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 bool argument_check(int argc, char *argv[]);
@@ -61,83 +60,9 @@ int get_file_length(FILE *file) {
   fseek(file, 0, SEEK_SET);
 
   // Cast to int and return
-  return (int)length;
+  return (int) length;
 }
 
 void rle_compress(FILE *file, int input_length, char *output_filename) {
-  if (file == NULL) {
-    return;
-  }
-
-  unsigned char *buffer = malloc(input_length + 1);
-  if (!buffer) {
-    fprintf(stderr, "Memory allocation failed\n");
-    return;
-  }
-
-  size_t bytes_read = fread(buffer, sizeof(char), input_length, file);
-  if (bytes_read == 0) {
-    fprintf(stderr, "No data read\n");
-    free(buffer);
-    return;
-  }
-
-  char *rle = malloc(2 * input_length + 1);
-  if (!rle) {
-    fprintf(stderr, "Memory allocation failed\n");
-    free(buffer);
-    return;
-  }
-
-  int i = 0;
-  int rle_index = 0;
-  char delimiter = 'Q';
-  while (i < (int)bytes_read) {
-    char current_char = buffer[i];
-    int run_length = 1;
-
-    // Count how many times current char repeats
-    while ((i + 1 < bytes_read) && buffer[i] == buffer[i + 1]) {
-      run_length++;
-      i++;
-    }
-
-    // if length > 3 print to array the count and number (i.e. 11A)
-    if (run_length >= 3) {
-      // Convert the number into ASCII (DELIMITER SHIT);
-      run_length += 64;
-      // If ASCII > Z
-      if (run_length > 90) {
-        run_length -= 90;
-        rle[rle_index++] = (char)run_length;
-      }
-
-      sprintf(rle + rle_index, "%i%c", run_length, current_char);
-      rle_index += strlen(rle + rle_index);
-    } else {
-      for (int j = 0; j < run_length; j++) {
-        if (current_char == delimiter) {
-          rle[rle_index++] = delimiter;
-          rle[rle_index++] = ' ';
-        } else {
-          rle[rle_index++] = current_char;
-        }
-      }
-    }
-
-    i++;
-  }
-
-  rle[rle_index] = '\0';
-
-  // Write to rle file
-  FILE *rle_file = fopen(output_filename, "wb");
-  if (rle_file != NULL) {
-    fwrite(rle, sizeof(char), strlen(rle), rle_file);
-  }
-
-  fclose(rle_file);
-  free(buffer);
-  free(rle);
   return;
 }
