@@ -3,14 +3,13 @@ CFLAGS = -Wall -Wextra -Werror -std=c11
 
 .PHONY: compress clean
 
-# Phony target: 'make compress' builds the 'boots' executable from compress.c
+# compress target builds boots executable
 compress: boots
 
-# boots executable built from compress.c
-boots: compress.c
-	$(CC) $(CFLAGS) -o boots compress.c
+# boots executable built from compress.c and rle.c inside src/
+boots: src/compress.c src/rle.c
+	$(CC) $(CFLAGS) -o boots src/compress.c src/rle.c
 
-# Pattern rule: build any other executable from matching .c file
-%: %.c
-	$(CC) $(CFLAGS) -o $@ $<
-
+# Pattern rule: build any other executable from matching .c file in src/
+%: src/%.c
+	$(CC) $(CFLAGS) -o $@ src/$<
