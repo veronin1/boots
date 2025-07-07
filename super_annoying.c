@@ -70,7 +70,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   // struct for RLE
   typedef unsigned char byte;
   typedef struct {
-    int run_length;
+    byte run_length;
     byte character;
   } RunLengthChar;
 
@@ -111,7 +111,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   i++;
 
   // open output file
-  FILE *output_file = fopen(output_filename, "w");
+  FILE *output_file = fopen(output_filename, "wb");
   if (output_file == NULL) {
     printf("Could not open output file: %s\n", output_filename);
     return;
@@ -119,8 +119,8 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
 
   // print to file
   for (size_t j = 0; j < i; j++) {
-    fwrite(&temp_arr[i].run_length, sizeof(byte), 1, output_file);
-    fwrite(&temp_arr[i].character, sizeof(byte), 1, output_file);
+    fwrite(&temp_arr[j].run_length, sizeof(byte), 1, output_file);
+    fwrite(&temp_arr[j].character, sizeof(byte), 1, output_file);
   }
 
   fclose(output_file);
