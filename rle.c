@@ -35,7 +35,7 @@ void rle_compress(FILE *file, int input_length, const char *output_filename) {
     if (next == prev) {
       run_length++;
     } else {
-      if (run_length >= 3) {
+      if (run_length > 3) {
         temp_arr[i].run_length = run_length;
         temp_arr[i].character = prev;
         i++;
