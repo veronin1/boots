@@ -92,8 +92,10 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     } else {
       run_length = 1;
 
+      // store rle (i.e. 3A)
       temp_arr[i].run_length = run_length;
       temp_arr[i].current_char = current_char;
+
       // for array index
       i++;
     }
