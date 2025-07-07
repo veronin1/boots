@@ -73,6 +73,9 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     char character;
   } RunLengthChar;
 
+  // reset file pointer to read from beginning (just in case)
+  fseek(file, 0, SEEK_SET);
+
   // temp array
   RunLengthChar *temp_arr = malloc(sizeof(RunLengthChar) * input_length);
   if (temp_arr == NULL) {
