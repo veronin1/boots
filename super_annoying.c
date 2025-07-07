@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -69,7 +70,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   // struct for RLE
   typedef struct {
     int run_length;
-    char current_char;
+    char character;
   } RunLengthChar;
 
   // temp array
@@ -84,25 +85,31 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
 
   // get next char from file
   int i = 0;
-  while ((next_char = fgetc(file) != EOF)) {
-    int run_length = 1;
+  int run_length = 1;
 
+  while ((next_char = fgetc(file)) != EOF) {
     if (current_char == next_char) {
       run_length++;
     } else {
-      run_length = 1;
-
       // store rle (i.e. 3A)
       temp_arr[i].run_length = run_length;
-      temp_arr[i].current_char = current_char;
+      temp_arr[i].character = current_char;
 
       // for array index
       i++;
+
+      // reset run for new char
+      run_length = 1;
     }
 
     // move loop along
     current_char = next_char;
   }
+
+  // handle final run after loop
+  temp_arr[i].character = current_char;
+  temp_arr[i].run_length = run_length;
+  i++;
 
   // open output file
   FILE *output_file = fopen(output_filename, "w");
@@ -111,5 +118,8 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     return;
   }
 
-  return;
+  // print to file
+  for (size_t j; j < i; j++) {
+    fprintf(output_file, "%i%c", temp_arr[j].run_length, temp_arr[j].character);
+  }
 }
