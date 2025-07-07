@@ -66,6 +66,13 @@ int get_file_length(FILE *file) {
 
 // AABBCC -> 2A2B2C
 void rle_compress(FILE *file, int input_length, char *output_filename) {
+  // struct for RLE
+  typedef struct {
+    int run_length;
+    char current_char;
+  } RunLengthChar;
+
+  // temp array
   size_t *temp_arr = malloc(sizeof(size_t) * input_length);
   if (temp_arr == NULL) {
     return;
@@ -83,6 +90,8 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
       run_length++;
     } else {
       run_length = 1;
+
+      sprintf(temp_arr, "%i%s", run_length, current_char);
     }
 
     // move loop along
