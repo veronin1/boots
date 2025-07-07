@@ -87,6 +87,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   int i = 0;
   int run_length = 1;
 
+  // loop until end of file
   while ((next_char = fgetc(file)) != EOF) {
     if (current_char == next_char) {
       run_length++;
@@ -119,7 +120,10 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   }
 
   // print to file
-  for (size_t j; j < i; j++) {
+  for (size_t j = 0; j < i; j++) {
     fprintf(output_file, "%i%c", temp_arr[j].run_length, temp_arr[j].character);
   }
+
+  fclose(output_file);
+  free(temp_arr);
 }
