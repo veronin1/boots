@@ -82,31 +82,22 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     return;
   }
 
-  // get current char from file
   int current_char = fgetc(file);
   int next_char;
-
-  // get next char from file
   int i = 0;
   int run_length = 1;
 
-  // loop until end of file
+  // Read characters until EOF, count consecutive repeats, and save runs when
+  // the character changes.
   while ((next_char = fgetc(file)) != EOF) {
     if (current_char == next_char) {
       run_length++;
     } else {
-      // store rle (i.e. 3A)
       temp_arr[i].run_length = run_length;
       temp_arr[i].character = current_char;
-
-      // for array index
       i++;
-
-      // reset run for new char
       run_length = 1;
     }
-
-    // move loop along
     current_char = next_char;
   }
 
