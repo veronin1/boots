@@ -20,6 +20,8 @@ int main(int argc, char *argv[]) {
 
   if (strcmp(argv[1], "-c") == 0) {
     rle_compress(file, length, argv[4]);
+  } else if (strcmp(argv[1], "-d") == 0) {
+    rle_decompress(file, length, argv[4]);
   }
 
   fclose(file);
@@ -129,5 +131,20 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
 }
 
 void rle_decompress(FILE *file, int input_length, char *output_filename) {
-  return;
+  fseek(file, 0, SEEK_SET);
+
+  FILE *output_file = fopen(output_filename, "w");
+
+  byte run_length;
+  byte character;
+
+  while (fread(&run_length, sizeof(byte), 1, file) == 1) {
+    if (fread(&character, sizeof(byte), 1, file) != 1) {
+      break;
+    }
+
+    for (int i = 0; i < run_length; i++) {
+      fwrite(&character, sizeof(byte), 1, output_file);
+    }
+  }
 }
