@@ -130,6 +130,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   free(temp_arr);
 }
 
+// 2A2B2C -> AABBCC
 void rle_decompress(FILE *file, int input_length, char *output_filename) {
   fseek(file, 0, SEEK_SET);
 
