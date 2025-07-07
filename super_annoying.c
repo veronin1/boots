@@ -68,9 +68,10 @@ int get_file_length(FILE *file) {
 // AABBCC -> 2A2B2C
 void rle_compress(FILE *file, int input_length, char *output_filename) {
   // struct for RLE
+  typedef unsigned char byte;
   typedef struct {
     int run_length;
-    char character;
+    byte character;
   } RunLengthChar;
 
   // reset file pointer to read from beginning (just in case)
@@ -82,27 +83,30 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     return;
   }
 
-  int current_char = fgetc(file);
-  int next_char;
+  byte prev;
+  byte next;
   int i = 0;
   int run_length = 1;
 
+  // read one byte into prev
+  fread(&prev, sizeof(byte), 1, file);
+
   // Read characters until EOF, count consecutive repeats, and save runs when
   // the character changes.
-  while ((next_char = fgetc(file)) != EOF) {
-    if (current_char == next_char) {
+  while (fread(&next, sizeof(byte), 1, file) == 1) {
+    if (next == prev) {
       run_length++;
     } else {
       temp_arr[i].run_length = run_length;
-      temp_arr[i].character = current_char;
+      temp_arr[i].character = prev;
       i++;
       run_length = 1;
     }
-    current_char = next_char;
+    prev = next;
   }
 
   // handle final run after loop
-  temp_arr[i].character = current_char;
+  temp_arr[i].character = prev;
   temp_arr[i].run_length = run_length;
   i++;
 
@@ -115,7 +119,8 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
 
   // print to file
   for (size_t j = 0; j < i; j++) {
-    fprintf(output_file, "%i%c", temp_arr[j].run_length, temp_arr[j].character);
+    fwrite(&temp_arr[i].run_length, sizeof(byte), 1, output_file);
+    fwrite(&temp_arr[i].character, sizeof(byte), 1, output_file);
   }
 
   fclose(output_file);
