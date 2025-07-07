@@ -73,7 +73,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   } RunLengthChar;
 
   // temp array
-  size_t *temp_arr = malloc(sizeof(size_t) * input_length);
+  RunLengthChar *temp_arr = malloc(sizeof(RunLengthChar) * input_length);
   if (temp_arr == NULL) {
     return;
   }
@@ -83,6 +83,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   int next_char;
 
   // get next char from file
+  int i = 0;
   while ((next_char = fgetc(file) != EOF)) {
     int run_length = 1;
 
@@ -91,7 +92,10 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     } else {
       run_length = 1;
 
-      sprintf(temp_arr, "%i%s", run_length, current_char);
+      temp_arr[i].run_length = run_length;
+      temp_arr[i].current_char = current_char;
+      // for array index
+      i++;
     }
 
     // move loop along
