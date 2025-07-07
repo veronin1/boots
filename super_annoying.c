@@ -6,6 +6,7 @@
 
 bool argument_check(int argc, char *argv[]);
 void rle_compress(FILE *fp, int input_length, char *output);
+void rle_decompress(FILE *file, int input_length, char *output_filename);
 int get_file_length(FILE *file);
 
 int main(int argc, char *argv[]) {
@@ -65,15 +66,15 @@ int get_file_length(FILE *file) {
   return (int) length;
 }
 
+// struct for RLE
+typedef unsigned char byte;
+typedef struct {
+  byte run_length;
+  byte character;
+} RunLengthChar;
+
 // AABBCC -> 2A2B2C
 void rle_compress(FILE *file, int input_length, char *output_filename) {
-  // struct for RLE
-  typedef unsigned char byte;
-  typedef struct {
-    byte run_length;
-    byte character;
-  } RunLengthChar;
-
   // reset file pointer to read from beginning (just in case)
   fseek(file, 0, SEEK_SET);
 
@@ -125,4 +126,8 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
 
   fclose(output_file);
   free(temp_arr);
+}
+
+void rle_decompress(FILE *file, int input_length, char *output_filename) {
+  return;
 }
