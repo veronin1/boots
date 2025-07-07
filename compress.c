@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 bool argument_check(int argc, char *argv[]);
@@ -63,6 +64,9 @@ int get_file_length(FILE *file) {
   return (int) length;
 }
 
+// AABBCC -> 2A2B2C
 void rle_compress(FILE *file, int input_length, char *output_filename) {
+  size_t *temp_arr = malloc(sizeof(size_t) * input_length);
+
   return;
 }
