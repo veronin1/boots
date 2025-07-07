@@ -5,7 +5,6 @@
 
 void rle_compress(FILE *input_file, int input_length,
                   const char *output_filename);
-void rle_decompress(FILE *input_file, int input_length,
-                    const char *output_filename);
+void rle_decompress(FILE *input_file, const char *output_filename);
 
 #endif

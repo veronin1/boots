@@ -23,7 +23,7 @@ void rle_compress(FILE *file, int input_length, const char *output_filename) {
 
   byte prev;
   byte next;
-  int i = 0;
+  size_t i = 0;
   int run_length = 1;
 
   // read one byte into prev
@@ -74,7 +74,7 @@ void rle_compress(FILE *file, int input_length, const char *output_filename) {
 }
 
 // 2A2B2C -> AABBCC
-void rle_decompress(FILE *file, int input_length, const char *output_filename) {
+void rle_decompress(FILE *file, const char *output_filename) {
   fseek(file, 0, SEEK_SET);
 
   FILE *output_file = fopen(output_filename, "w");
