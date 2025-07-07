@@ -115,7 +115,7 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
   // open output file
   FILE *output_file = fopen(output_filename, "w");
   if (output_file == NULL) {
-    fclose(output_file);
+    printf("Could not open output file: %s\n", output_filename);
     return;
   }
 
