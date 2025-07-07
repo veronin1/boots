@@ -104,5 +104,12 @@ void rle_compress(FILE *file, int input_length, char *output_filename) {
     current_char = next_char;
   }
 
+  // open output file
+  FILE *output_file = fopen(output_filename, "w");
+  if (output_file == NULL) {
+    fclose(output_file);
+    return;
+  }
+
   return;
 }
