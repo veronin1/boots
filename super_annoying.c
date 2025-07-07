@@ -67,10 +67,26 @@ int get_file_length(FILE *file) {
 // AABBCC -> 2A2B2C
 void rle_compress(FILE *file, int input_length, char *output_filename) {
   size_t *temp_arr = malloc(sizeof(size_t) * input_length);
-
-  int i = 0;
-  while (i < input_length) {
+  if (temp_arr == NULL) {
     return;
+  }
+
+  // get current char from file
+  int current_char = fgetc(file);
+  int next_char;
+
+  // get next char from file
+  while ((next_char = fgetc(file) != EOF)) {
+    int run_length = 1;
+
+    if (current_char == next_char) {
+      run_length++;
+    } else {
+      run_length = 1;
+    }
+
+    // move loop along
+    current_char = next_char;
   }
 
   return;
