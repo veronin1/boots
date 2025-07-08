@@ -3,8 +3,6 @@
 
 #define MAX 256
 
-void walkHuffman(TreeNode *node, char path[], int depth);
-
 typedef unsigned char byte;
 
 // Tree node for Huffman
@@ -23,6 +21,8 @@ typedef struct {
 
 PriorityQueue *queue[MAX];
 int queue_size = 0;
+
+void walkHuffman(TreeNode *node, char path[], int depth);
 
 // Insert into priority queue (sorted by priority, lowest first)
 void insert(TreeNode *node, int priority) {
@@ -54,11 +54,7 @@ PriorityQueue *pop() {
 
 void huffman_compress(FILE *input_file, int input_length, const char *output_filename) {
   // freq table
-  byte *frequencyTable = malloc(sizeof(byte) * MAX);
-  if (frequencyTable == NULL) {
-    printf("Memory allocation failed: frequencyTable");
-    return;
-  }
+  int frequencyTable[MAX] = {0};
 
   // zero out data
   for (int i = 0; i < MAX; i++) {
@@ -94,6 +90,9 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
     node->value = 0;
 
     insert(node, node->frequency);
+
+    free(first);
+    free(second);
   }
 
   char path[MAX];
