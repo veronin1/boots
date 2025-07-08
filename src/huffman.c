@@ -11,14 +11,14 @@ typedef struct TreeNode {
 
 void huffman_compress(FILE *input_file, int input_length, const char *output_filename) {
   // freq table
-  byte *frequencyTable = malloc(sizeof(byte) * 256);
+  byte *frequencyTable = malloc(sizeof(byte) * MAX);
   if (frequencyTable == NULL) {
     printf("Memory allocation failed: frequencyTable");
     return;
   }
 
   // zero out data
-  for (int i = 0; i < 256; i++) {
+  for (int i = 0; i < MAX; i++) {
     frequencyTable[i] = 0;
   }
 
@@ -34,6 +34,15 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
   } PriorityQueue;
 
   PriorityQueue *queue[MAX];
+  int size = 0;
 
   return;
 }
+
+void insert(byte item, int priorty, int size) {
+  if (size >= MAX) {
+    printf("Queue full");
+    return;
+  }
+
+  for (int i = 0; i < MAX; i++) }
