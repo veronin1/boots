@@ -47,5 +47,15 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
     frequencyTable[b]++;
   }
 
+  for (int i = 0; i < MAX; i++) {
+    if (frequencyTable[i] > 0) {
+      TreeNode *node = malloc(sizeof(TreeNode));
+      node->value = (byte) i;
+      node->frequency = frequencyTable[i];
+      node->left = NULL;
+      node->right = NULL;
+    }
+  }
+
   return;
 }
