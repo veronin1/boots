@@ -81,5 +81,18 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
     }
   }
 
+  while (queue_size > 1) {
+    TreeNode *node = malloc(sizeof(TreeNode));
+    PriorityQueue *first = pop();
+    PriorityQueue *second = pop();
+
+    node->frequency = first->priority + second->priority;
+    node->left = first->node;
+    node->right = second->node;
+    node->value = 0;
+
+    insert(node, node->frequency);
+  }
+
   return;
 }
