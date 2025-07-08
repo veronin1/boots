@@ -101,10 +101,10 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
     free(second);
   }
 
-  char path[MAX];
-  walkHuffman(queue[0]->node, path, 0);
-
-  return;
+  if (queue_size > 0 && queue[0] != NULL) {
+    char path[MAX];
+    walkHuffman(queue[0]->node, path, 0);
+  }
 }
 
 char *codes[MAX];
