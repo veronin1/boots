@@ -49,7 +49,13 @@ void insert(TreeNode *node, int priority) {
 // pop from priority queue (lowest prior)
 PriorityQueue *pop() {
   if (queue_size == 0) return NULL;
-  return queue[--queue_size];
+  PriorityQueue *item = queue[0];
+
+  for (int i = 1; i < queue_size; i++) {
+    queue[i - 1] = queue[i];
+  }
+  queue_size--;
+  return item;
 }
 
 void huffman_compress(FILE *input_file, int input_length, const char *output_filename) {
