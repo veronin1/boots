@@ -3,6 +3,8 @@
 
 #define MAX 256
 
+void walkHuffman(TreeNode *node, char path[], int depth);
+
 typedef unsigned char byte;
 
 // Tree node for Huffman
@@ -94,5 +96,30 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
     insert(node, node->frequency);
   }
 
+  char path[MAX];
+  walkHuffman(queue[0]->node, path, 0);
+
   return;
+}
+
+char *codes[MAX];
+
+void walkHuffman(TreeNode *node, char path[], int depth) {
+  if (!node->right && !node->left) {
+    codes[node->value] = malloc(depth + 1);
+
+    for (int i = 0; i < depth; i++) {
+      codes[node->value][i] = path[i];
+    }
+    codes[node->value][depth] = '\0';
+  }
+
+  if (node->left) {
+    path[depth] = '0';
+    walkHuffman(node->left, path, depth + 1);
+  }
+  if (node->right) {
+    path[depth] = '1';
+    walkHuffman(node->right, path, depth + 1);
+  }
 }
