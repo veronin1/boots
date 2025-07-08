@@ -22,6 +22,28 @@ typedef struct {
 PriorityQueue *queue[MAX];
 int queue_size = 0;
 
+// Insert into priority queue (sorted by priority, lowest first)
+void insert(TreeNode *node, int priority) {
+  if (queue_size >= MAX) {
+    printf("Queue full\n");
+    return;
+  }
+
+  PriorityQueue *item = malloc(sizeof(PriorityQueue));
+  item->node = node;
+  item->priority = priority;
+
+  int i = queue_size - 1;
+  while (i >= 0 && queue[i]->priority > priority) {
+    queue[i + 1] = queue[i];
+    i--;
+  }
+
+  queue[i + 1] = item;
+
+  queue_size++;
+}
+
 // pop from priority queue (lowest prior)
 PriorityQueue *pop() {
   if (queue_size == 0) return NULL;
@@ -54,6 +76,8 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
       node->frequency = frequencyTable[i];
       node->left = NULL;
       node->right = NULL;
+
+      insert(node, frequencyTable[i]);
     }
   }
 
