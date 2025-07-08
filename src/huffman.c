@@ -4,10 +4,29 @@
 #define MAX 256
 
 typedef unsigned char byte;
+
+// Tree node for Huffman
 typedef struct TreeNode {
+  byte value;
+  int frequency;
   struct TreeNode *left;
   struct TreeNode *right;
 } TreeNode;
+
+// Priority queue element
+typedef struct {
+  TreeNode *node;
+  int priority;
+} PriorityQueue;
+
+PriorityQueue *queue[MAX];
+int queue_size = 0;
+
+// pop from priority queue (lowest prior)
+PriorityQueue *pop() {
+  if (queue_size == 0) return NULL;
+  return queue[--queue_size];
+}
 
 void huffman_compress(FILE *input_file, int input_length, const char *output_filename) {
   // freq table
@@ -28,21 +47,5 @@ void huffman_compress(FILE *input_file, int input_length, const char *output_fil
     frequencyTable[b]++;
   }
 
-  typedef struct {
-    byte item;
-    int priority;
-  } PriorityQueue;
-
-  PriorityQueue *queue[MAX];
-  int size = 0;
-
   return;
 }
-
-void insert(byte item, int priorty, int size) {
-  if (size >= MAX) {
-    printf("Queue full");
-    return;
-  }
-
-  for (int i = 0; i < MAX; i++) }
