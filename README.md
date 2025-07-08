@@ -6,7 +6,7 @@ Encodes consecutive repeated characters as a single character and count. (for ex
 
 ## Huffman Coding
 
-Compresses data by assigning shorter bit codes to more frequent characters.
+Compresses data by assigning shorter bit codes to more frequent characters using a binary tree.
 
 ## Features
 
@@ -14,9 +14,29 @@ Compresses data by assigning shorter bit codes to more frequent characters.
 - CLI-based usage with custom file output
 - Built entirely in C
 
+## Installation
+
+Clone the repository and compile the program:
+
+```sh
+git clone https://github.com/veronin1/boots.git
+cd boots
+make
+```
+
 ## Usage
 
-```bash
+**Flags:**
+
+- `-c` -> Compress
+- `-d` -> Decompress
+- `-rle` -> Use Run-Length Encoding
+- `-huff` -> Use Huffman Coding
+
+```sh
+./boots (-c|-d) (-rle|-huff) <input_file> <output_file>
+
+
 # Compress a file using Run-Length Encoding (RLE)
 ./boots -c -rle input_file output.rle
 
@@ -35,3 +55,16 @@ Compresses data by assigning shorter bit codes to more frequent characters.
 - [ ] Create `-auto` flag to automatically decide which compression algorithm to use based on file content or type
 - [ ] Implement file extension check to determine which decompression algorithm to apply
 - [ ] Use more complex file compression techniques
+
+## What I Learned
+
+- Fundamentals of data compression
+- Data structures like trees, queues, and arrays
+- Implementation of **Run-Length Encoding (RLE)** in C
+- Implementation of **Huffman Coding** (tree-based compression)
+- Use of **priority queues** for building Huffman Trees
+- Bit-level manipulation for compact binary encoding/decoding
+- File I/O in C
+- Recursive algorithms for tree traversal
+- Dynamic memory management using `malloc` and `free`
+- Handling edge cases and validating compression accuracy
